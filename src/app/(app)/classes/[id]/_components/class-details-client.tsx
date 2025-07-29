@@ -2,13 +2,13 @@
 
 import type { Class, Student, Lesson } from '@/lib/types';
 import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
-import { Lock, Unlock, Users, ListVideo, Eye } from 'lucide-react';
-import { LessonView } from './lesson-view';
+import { Lock, Unlock, Users, ListVideo, Eye, ArrowRight, FileVideo } from 'lucide-react';
+import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 interface ClassDetailsClientProps {
   classInfo: Class;
@@ -58,24 +58,11 @@ export function ClassDetailsClient({ classInfo, enrolledStudents, lessons }: Cla
                 </div>
             </CardHeader>
             <CardContent>
-                <Accordion type="single" collapsible className="w-full">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {lessons.map(lesson => (
-                        <AccordionItem value={lesson.id} key={lesson.id}>
-                            <AccordionTrigger>
-                                <div className="flex items-center gap-4">
-                                    {isPaid ? <Unlock className="h-5 w-5 text-green-500" /> : <Lock className="h-5 w-5 text-destructive" />}
-                                    <span className="text-left">{lesson.title}</span>
-                                </div>
-                            </AccordionTrigger>
-                            <AccordionContent>
-                                <div className="space-y-4">
-                                    <p className="text-muted-foreground">{lesson.description}</p>
-                                    <LessonView lesson={lesson} isLocked={!isPaid} />
-                                </div>
-                            </AccordionContent>
-                        </AccordionItem>
+                        <LessonCard key={lesson.id} lesson={lesson} isLocked={!isPaid} classId={classInfo.id} />
                     ))}
-                </Accordion>
+                </div>
                 {!selectedStudent && <p className="text-center text-muted-foreground mt-4">Please select a student to view lesson content.</p>}
             </CardContent>
            </Card>
@@ -111,4 +98,40 @@ export function ClassDetailsClient({ classInfo, enrolledStudents, lessons }: Cla
       </div>
     </div>
   );
+}
+
+
+function LessonCard({ lesson, isLocked, classId }: { lesson: Lesson, isLocked: boolean, classId: string }) {
+    const CardWrapper = isLocked ? 'div' : Link;
+    const props = isLocked ? {} : { href: `/classes/${classId}/lessons/${lesson.id}` };
+
+    return (
+        <CardWrapper {...props} className={cn(
+            "group",
+            !isLocked && "hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+        )}>
+            <Card className={cn("flex flex-col h-full", isLocked && "bg-muted/50")}>
+                 <CardHeader className="flex-row items-start gap-4 space-y-0">
+                    <div className="p-2 bg-accent/10 rounded-lg">
+                        {isLocked ? <Lock className="h-6 w-6 text-destructive"/> : <Unlock className="h-6 w-6 text-green-500" />}
+                    </div>
+                    <div>
+                        <CardTitle>{lesson.title}</CardTitle>
+                        <CardDescription className="line-clamp-2">{lesson.description}</CardDescription>
+                    </div>
+                </CardHeader>
+                <CardContent className="flex-grow flex items-center justify-center">
+                    <div className="w-full aspect-video bg-background rounded-lg flex items-center justify-center border">
+                        <FileVideo className="h-12 w-12 text-muted-foreground" />
+                    </div>
+                </CardContent>
+                <CardFooter>
+                    <Button variant="ghost" size="sm" className="w-full" disabled={isLocked}>
+                        {isLocked ? "Access Locked" : "View Lesson"}
+                        {!isLocked && <ArrowRight className="ml-2 h-4 w-4" />}
+                    </Button>
+                </CardFooter>
+            </Card>
+        </CardWrapper>
+    )
 }
