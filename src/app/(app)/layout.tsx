@@ -113,7 +113,7 @@ export default function AppLayout({
                     {/* Header content can go here if needed */}
                 </div>
             </header>
-            <main className="p-4 sm:px-6 sm:py-0">
+            <main className="p-4 sm:p-6">
                 {children}
             </main>
         </SidebarInset>
