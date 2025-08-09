@@ -19,7 +19,7 @@ export function LessonDetailsClient({ lesson, enrolledStudents, otherLessons, cl
   const [selectedStudentId, setSelectedStudentId] = useState<string | null>(enrolledStudents[0]?.id || null);
 
   const selectedStudent = enrolledStudents.find(s => s.id === selectedStudentId);
-  const isPaid = selectedStudent?.paymentStatus === 'Paid';
+  const isPaid = !!selectedStudent && selectedStudent.paymentStatus === 'Paid';
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -61,7 +61,7 @@ export function LessonDetailsClient({ lesson, enrolledStudents, otherLessons, cl
                     <ListVideo />
                     Other Lessons
                 </CardTitle>
-            </Header>
+            </CardHeader>
             <CardContent>
                 <ul className="space-y-3">
                     {otherLessons.map(otherLesson => (
