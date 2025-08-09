@@ -2,7 +2,7 @@
 
 import type { Lesson } from '@/lib/types';
 import { useState, useEffect } from 'react';
-import ReactPlayer from 'react-player/youtube';
+import ReactPlayer from 'react-player';
 import { generateSummaryAction } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -89,22 +89,30 @@ export function LessonView({ lesson, isLocked }: LessonViewProps) {
             <CardContent>
                 <div className="w-full aspect-video bg-background rounded-lg flex items-center justify-center border overflow-hidden">
                    {isClient ? (
-                    <ReactPlayer
-                      url={lesson.youtubeUrl}
-                      width="100%"
-                      height="100%"
-                      controls={true}
-                      config={{
-                        youtube: {
-                          playerVars: { 
-                            showinfo: 0,
-                            controls: 1,
-                            modestbranding: 1,
-                            rel: 0,
-                           }
-                        }
-                      }}
-                    />
+                    <div onContextMenu={(e) => e.preventDefault()} className="w-full h-full">
+                        <ReactPlayer
+                          url={lesson.youtubeUrl}
+                          width="100%"
+                          height="100%"
+                          controls={true}
+                          config={{
+                            youtube: {
+                              playerVars: { 
+                                showinfo: 0,
+                                controls: 1,
+                                modestbranding: 1,
+                                rel: 0,
+                              }
+                            },
+                            file: {
+                                attributes: {
+                                    onContextMenu: (e: React.MouseEvent<HTMLVideoElement>) => e.preventDefault(),
+                                    controlsList: 'nodownload'
+                                }
+                            }
+                          }}
+                        />
+                    </div>
                   ) : (
                     <Skeleton className="w-full h-full" />
                   )}
