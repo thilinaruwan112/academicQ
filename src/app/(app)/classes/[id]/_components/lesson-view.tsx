@@ -2,8 +2,8 @@
 
 import type { Lesson } from '@/lib/types';
 import { useState, useEffect, useRef } from 'react';
-import Plyr from "plyr-react";
 import type { Plyr as PlyrInstance } from 'plyr';
+import dynamic from 'next/dynamic';
 import { generateSummaryAction } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -11,6 +11,8 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Wand2, Loader2, Video, AlertCircle, PlayCircle } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+
+const Plyr = dynamic(() => import('plyr-react'), { ssr: false });
 
 interface LessonViewProps {
   lesson: Lesson;
