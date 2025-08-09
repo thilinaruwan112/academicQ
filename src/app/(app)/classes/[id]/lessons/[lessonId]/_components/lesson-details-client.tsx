@@ -61,7 +61,7 @@ export function LessonDetailsClient({ lesson, enrolledStudents, otherLessons, cl
                     <ListVideo />
                     Other Lessons
                 </CardTitle>
-            </CardHeader>
+            </Header>
             <CardContent>
                 <ul className="space-y-3">
                     {otherLessons.map(otherLesson => (
