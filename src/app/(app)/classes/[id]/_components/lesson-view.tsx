@@ -61,6 +61,7 @@ export function LessonView({ lesson, isLocked }: LessonViewProps) {
       rel: 0,
       showinfo: 0,
       modestbranding: 1,
+      controls: 0,
     },
   };
 
