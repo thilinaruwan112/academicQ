@@ -1,16 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { students, classes, institutes } from "@/lib/data";
+import { users, classes, institutes } from "@/lib/data";
 import { Users, BookOpen, AlertCircle, ArrowRight, Building } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function DashboardPage() {
-  const totalStudents = students.length;
+  const totalStudents = users.length;
   const totalClasses = classes.length;
-  const pendingPayments = students.filter(s => s.paymentStatus === 'Pending');
+  const pendingPayments = users.filter(s => s.paymentStatus === 'Pending');
   const institute = institutes[0]; // In a real app, this would come from the user's session
 
   return (

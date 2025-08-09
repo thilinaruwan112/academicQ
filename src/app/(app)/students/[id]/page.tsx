@@ -1,4 +1,4 @@
-import { students, classes as allClasses } from '@/lib/data';
+import { users, classes as allClasses } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -8,7 +8,7 @@ import { List, BookOpen } from 'lucide-react';
 import Link from 'next/link';
 
 export default function StudentProfilePage({ params }: { params: { id: string } }) {
-  const student = students.find((s) => s.id === params.id);
+  const student = users.find((s) => s.id === params.id);
 
   if (!student) {
     notFound();

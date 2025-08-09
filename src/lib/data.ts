@@ -1,12 +1,12 @@
-import type { Student, Class, Lesson, Institute } from './types';
+import type { User, Class, Lesson, Institute } from './types';
 
-export const students: Student[] = [
-  { id: '1', name: 'Alice Johnson', email: 'alice@example.com', avatarUrl: 'https://placehold.co/100x100.png', paymentStatus: 'Paid', classIds: ['c1', 'c3'] },
-  { id: '2', name: 'Bob Williams', email: 'bob@example.com', avatarUrl: 'https://placehold.co/100x100.png', paymentStatus: 'Pending', classIds: ['c1', 'c2'] },
-  { id: '3', name: 'Charlie Brown', email: 'charlie@example.com', avatarUrl: 'https://placehold.co/100x100.png', paymentStatus: 'Paid', classIds: ['c2'] },
-  { id: '4', name: 'Diana Miller', email: 'diana@example.com', avatarUrl: 'https://placehold.co/100x100.png', paymentStatus: 'Paid', classIds: ['c3'] },
-  { id: '5', name: 'Ethan Davis', email: 'ethan@example.com', avatarUrl: 'https://placehold.co/100x100.png', paymentStatus: 'Pending', classIds: ['c1'] },
-  { id: '6', name: 'Fiona Garcia', email: 'fiona@example.com', avatarUrl: 'https://placehold.co/100x100.png', paymentStatus: 'Paid', classIds: ['c2', 'c3'] },
+export const users: User[] = [
+  { id: '1', name: 'Alice Johnson', email: 'alice@example.com', avatarUrl: 'https://placehold.co/100x100.png', paymentStatus: 'Paid', classIds: ['c1', 'c3'], role: 'Student' },
+  { id: '2', name: 'Bob Williams', email: 'bob@example.com', avatarUrl: 'https://placehold.co/100x100.png', paymentStatus: 'Pending', classIds: ['c1', 'c2'], role: 'Student' },
+  { id: '3', name: 'Charlie Brown', email: 'charlie@example.com', avatarUrl: 'https://placehold.co/100x100.png', paymentStatus: 'Paid', classIds: ['c2'], role: 'Student' },
+  { id: '4', name: 'Diana Miller', email: 'diana@example.com', avatarUrl: 'https://placehold.co/100x100.png', paymentStatus: 'Paid', classIds: ['c3'], role: 'Student' },
+  { id: '5', name: 'Ethan Davis', email: 'ethan@example.com', avatarUrl: 'https://placehold.co/100x100.png', paymentStatus: 'Pending', classIds: ['c1'], role: 'Student' },
+  { id: '6', name: 'Fiona Garcia', email: 'fiona@example.com', avatarUrl: 'https://placehold.co/100x100.png', paymentStatus: 'Paid', classIds: ['c2', 'c3'], role: 'Student' },
 ];
 
 export const classes: Class[] = [
@@ -21,7 +21,7 @@ export const lessons: Lesson[] = [
   { id: 'l3', classId: 'c2', title: 'Lesson 1: Understanding Hooks', description: 'A deep dive into useState and useEffect.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/TNhaISOUy6Q' },
   { id: 'l4', classId: 'c2', title: 'Lesson 2: State Management with Context', description: 'How to manage global state with the Context API.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/5LrDIWkK_Bc' },
   { id: 'l5', classId: 'c3', title: 'Lesson 1: The Principles of Design', description: 'Learn about color theory, typography, and layout.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/s_i_FPx9k-Q' },
-  { id: 'l6', classId: 'c3', title: 'Lesson 2: Prototyping in Figma', description: 'A hands-on guide to creating interactive prototypes.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/5i_h5gS7M4I' },
+  { id: 'l6', classId: 'c3', title: 'Lesson 2: Prototyping in Figma', description: 'A hands-on guide to creating interactive prototypes.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/5i_i_h5gS7M4I' },
 ];
 
 export const institutes: Institute[] = [

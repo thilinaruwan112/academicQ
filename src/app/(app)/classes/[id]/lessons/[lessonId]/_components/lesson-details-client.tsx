@@ -1,6 +1,6 @@
 'use client';
 
-import type { Class, Lesson, Student } from '@/lib/types';
+import type { Class, Lesson, User } from '@/lib/types';
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -10,7 +10,7 @@ import Link from 'next/link';
 
 interface LessonDetailsClientProps {
   lesson: Lesson;
-  enrolledStudents: Student[];
+  enrolledStudents: User[];
   otherLessons: Lesson[];
   classInfo: Class;
 }

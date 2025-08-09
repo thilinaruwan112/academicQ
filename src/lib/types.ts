@@ -1,10 +1,13 @@
-export interface Student {
+export type UserRole = 'Student' | 'Staff' | 'Admin';
+
+export interface User {
   id: string;
   name: string;
   email: string;
   avatarUrl: string;
   paymentStatus: 'Paid' | 'Pending';
   classIds: string[];
+  role: UserRole;
 }
 
 export interface Class {

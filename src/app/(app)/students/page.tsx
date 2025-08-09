@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { students, classes } from "@/lib/data";
+import { users, classes } from "@/lib/data";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -24,13 +24,13 @@ export default function StudentsPage() {
         <CardHeader>
           <CardTitle>All Students</CardTitle>
           <CardDescription>
-            {students.length} student(s) in total.
+            {users.length} student(s) in total.
           </CardDescription>
         </CardHeader>
         <CardContent>
           {/* Mobile View - Cards */}
           <div className="md:hidden space-y-4">
-            {students.map((student) => (
+            {users.map((student) => (
               <div key={student.id} className="border rounded-lg p-4">
                 <div className="flex items-start justify-between gap-4">
                     <div className="flex items-center gap-4">
@@ -74,7 +74,7 @@ export default function StudentsPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {students.map((student) => (
+                {users.map((student) => (
                   <TableRow key={student.id} className="hover:bg-muted/50">
                     <TableCell>
                       <div className="flex items-center gap-4">

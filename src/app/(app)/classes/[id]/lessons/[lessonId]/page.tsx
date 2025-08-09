@@ -1,4 +1,4 @@
-import { classes, lessons as allLessons, students as allStudents } from '@/lib/data';
+import { classes, lessons as allLessons, users as allStudents } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import { LessonDetailsClient } from './_components/lesson-details-client';
 import type { Lesson } from '@/lib/types';
