@@ -1,8 +1,9 @@
 'use client';
 
 import type { Lesson } from '@/lib/types';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Plyr from "plyr-react";
+import type { Plyr as PlyrInstance } from 'plyr';
 import { generateSummaryAction } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -24,6 +25,7 @@ export function LessonView({ lesson, isLocked }: LessonViewProps) {
   
   const [isClient, setIsClient] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
+  const playerRef = useRef<PlyrInstance | null>(null);
 
   useEffect(() => {
     setIsClient(true);
@@ -42,6 +44,16 @@ export function LessonView({ lesson, isLocked }: LessonViewProps) {
     });
     setIsLoading(false);
   };
+
+  const handlePlay = () => {
+    setShowVideo(true);
+  };
+
+  useEffect(() => {
+    if (showVideo && playerRef.current) {
+      playerRef.current.play();
+    }
+  }, [showVideo]);
 
   if (isLocked) {
     return (
@@ -63,7 +75,7 @@ export function LessonView({ lesson, isLocked }: LessonViewProps) {
       modestbranding: 1,
       controls: 0,
     },
-    autoplay: true,
+    // autoplay is handled by useEffect
   };
 
   return (
@@ -78,7 +90,7 @@ export function LessonView({ lesson, isLocked }: LessonViewProps) {
                      <>
                       {!showVideo ? (
                         <div className="text-center">
-                           <Button variant="ghost" size="lg" onClick={() => setShowVideo(true)}>
+                           <Button variant="ghost" size="lg" onClick={handlePlay}>
                               <PlayCircle className="h-16 w-16 text-primary" />
                            </Button>
                            <p className="text-muted-foreground mt-2">Click to play video</p>
@@ -86,6 +98,11 @@ export function LessonView({ lesson, isLocked }: LessonViewProps) {
                       ) : (
                          <div onContextMenu={(e) => e.preventDefault()} className="w-full h-full">
                             <Plyr 
+                              ref={(player) => {
+                                if (player?.plyr) {
+                                  playerRef.current = player.plyr;
+                                }
+                              }}
                               source={{
                                 type: 'video',
                                 sources: [
