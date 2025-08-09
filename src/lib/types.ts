@@ -25,3 +25,9 @@ export interface Lesson {
   youtubeUrl: string;
   classId: string;
 }
+
+export interface Institute {
+  id: string;
+  name: string;
+  adminEmail: string;
+}
