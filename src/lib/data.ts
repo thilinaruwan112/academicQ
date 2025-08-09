@@ -16,10 +16,10 @@ export const classes: Class[] = [
 ];
 
 export const lessons: Lesson[] = [
-  { id: 'l1', classId: 'c1', title: 'Lesson 1: The Basics of HTML', description: 'An introduction to HTML tags and document structure.', videoUrl: 'placeholder' },
-  { id: 'l2', classId: 'c1', title: 'Lesson 2: Styling with CSS', description: 'Learn how to use CSS to style your web pages.', videoUrl: 'placeholder' },
-  { id: 'l3', classId: 'c2', title: 'Lesson 1: Understanding Hooks', description: 'A deep dive into useState and useEffect.', videoUrl: 'placeholder' },
-  { id: 'l4', classId: 'c2', title: 'Lesson 2: State Management with Context', description: 'How to manage global state with the Context API.', videoUrl: 'placeholder' },
-  { id: 'l5', classId: 'c3', title: 'Lesson 1: The Principles of Design', description: 'Learn about color theory, typography, and layout.', videoUrl: 'placeholder' },
-  { id: 'l6', classId: 'c3', title: 'Lesson 2: Prototyping in Figma', description: 'A hands-on guide to creating interactive prototypes.', videoUrl: 'placeholder' },
+  { id: 'l1', classId: 'c1', title: 'Lesson 1: The Basics of HTML', description: 'An introduction to HTML tags and document structure.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/pQN-pnXPaVg' },
+  { id: 'l2', classId: 'c1', title: 'Lesson 2: Styling with CSS', description: 'Learn how to use CSS to style your web pages.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/OEV8gMkCHXQ' },
+  { id: 'l3', classId: 'c2', title: 'Lesson 1: Understanding Hooks', description: 'A deep dive into useState and useEffect.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/TNhaISOUy6Q' },
+  { id: 'l4', classId: 'c2', title: 'Lesson 2: State Management with Context', description: 'How to manage global state with the Context API.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/5LrDIWkK_Bc' },
+  { id: 'l5', classId: 'c3', title: 'Lesson 1: The Principles of Design', description: 'Learn about color theory, typography, and layout.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/s_i_FPx9k-Q' },
+  { id: 'l6', classId: 'c3', title: 'Lesson 2: Prototyping in Figma', description: 'A hands-on guide to creating interactive prototypes.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/5i_h5gS7M4I' },
 ];

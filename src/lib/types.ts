@@ -8,7 +8,7 @@ export interface Student {
 }
 
 export interface Class {
-  id: string;
+  id:string;
   name: string;
   description: string;
   teacher: string;
@@ -22,5 +22,6 @@ export interface Lesson {
   title: string;
   description: string;
   videoUrl: string;
+  youtubeUrl: string;
   classId: string;
 }
