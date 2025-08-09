@@ -41,7 +41,7 @@ export default function LoginPage() {
     <Card>
       <form onSubmit={handleLogin}>
         <CardHeader className="text-center">
-          <CardTitle>Welcome Back!</CardTitle>
+          <CardTitle>Institute Login</CardTitle>
           <CardDescription>
             Enter your email below to login to your institute's account.
           </CardDescription>
@@ -49,10 +49,18 @@ export default function LoginPage() {
         <CardContent className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="m@example.com" required />
+            <Input id="email" type="email" placeholder="admin@institute.com" required />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <div className="flex items-center">
+              <Label htmlFor="password">Password</Label>
+              <Link
+                href="#"
+                className="ml-auto inline-block text-sm underline"
+              >
+                Forgot your password?
+              </Link>
+            </div>
             <Input id="password" type="password" required />
           </div>
         </CardContent>
@@ -60,12 +68,18 @@ export default function LoginPage() {
           <Button type="submit" className="w-full">
             Log in
           </Button>
-          <p className="text-sm text-muted-foreground">
+          <div className="text-center text-sm text-muted-foreground">
             Don&apos;t have an institute account?{" "}
             <Link href="/register" className="font-semibold text-primary hover:underline">
               Register
             </Link>
-          </p>
+          </div>
+           <div className="text-center text-sm text-muted-foreground mt-2">
+            Are you a student?{" "}
+            <Link href="#" className="font-semibold text-primary hover:underline">
+              Login here
+            </Link>
+          </div>
         </CardFooter>
       </form>
     </Card>
