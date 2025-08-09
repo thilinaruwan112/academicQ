@@ -13,14 +13,27 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { toast } = useToast();
 
   const handleLogin = (event: React.FormEvent) => {
     event.preventDefault();
-    // In a real app, you'd have authentication logic here.
-    // For this demo, we'll just navigate to the dashboard.
+    // In a real app, you'd have authentication logic here that
+    // verifies the user's credentials and their institute affiliation.
+    // For this demo, we'll simulate a successful login for the default institute.
+    
+    // 1. Authenticate user credentials (e.g., call Firebase Auth)
+    // 2. Look up the user's institute ID from your database.
+    // 3. Securely load data ONLY for that institute.
+    
+    toast({
+      title: "Login Successful",
+      description: "Loading your institute's dashboard.",
+    });
+
     router.push("/dashboard");
   };
 
@@ -30,7 +43,7 @@ export default function LoginPage() {
         <CardHeader className="text-center">
           <CardTitle>Welcome Back!</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Enter your email below to login to your institute's account.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
