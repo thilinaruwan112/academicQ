@@ -27,8 +27,8 @@ export default function StudentProfilePage({ params }: { params: { id: string } 
         <p className="text-muted-foreground">Student Profile & Records</p>
       </header>
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-        <div className="lg:col-span-1 space-y-8">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="lg:col-span-1 space-y-6">
           <Card>
             <CardHeader>
               <CardTitle>Student QR Code</CardTitle>
@@ -46,7 +46,7 @@ export default function StudentProfilePage({ params }: { params: { id: string } 
           </Card>
         </div>
 
-        <div className="lg:col-span-2 space-y-8">
+        <div className="lg:col-span-2 space-y-6">
             <Card>
                 <CardHeader>
                     <div className="flex flex-col sm:flex-row justify-between items-start gap-4">

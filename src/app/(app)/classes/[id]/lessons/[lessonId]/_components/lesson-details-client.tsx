@@ -22,12 +22,12 @@ export function LessonDetailsClient({ lesson, enrolledStudents, otherLessons, cl
   const isPaid = !!selectedStudent && selectedStudent.paymentStatus === 'Paid';
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div className="lg:col-span-2">
          <LessonView lesson={lesson} isLocked={!isPaid} />
       </div>
 
-      <div className="lg:col-span-1 space-y-8">
+      <div className="lg:col-span-1 space-y-6">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2"><Eye /> Student View</CardTitle>

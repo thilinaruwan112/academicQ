@@ -30,7 +30,7 @@ export function ClassDetailsClient({ classInfo, enrolledStudents, lessons }: Cla
         <p className="text-sm text-muted-foreground mt-2">Taught by {classInfo.teacher} &bull; {classInfo.schedule}</p>
       </header>
       
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-8">
            <Card>
             <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-4">
@@ -58,7 +58,7 @@ export function ClassDetailsClient({ classInfo, enrolledStudents, lessons }: Cla
                 </div>
             </CardHeader>
             <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {lessons.map(lesson => (
                         <LessonCard key={lesson.id} lesson={lesson} isLocked={!isPaid} classId={classInfo.id} />
                     ))}

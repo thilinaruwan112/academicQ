@@ -20,7 +20,7 @@ export default function DashboardPage() {
         <p className="text-muted-foreground">Welcome! Here's an overview of your institute's activity.</p>
       </header>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <Link href="/students" className="block">
           <Card className="hover:bg-muted/50 transition-colors">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -55,7 +55,7 @@ export default function DashboardPage() {
         </Card>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-3">
         <Card className="md:col-span-2">
             <CardHeader>
             <CardTitle>Students with Pending Payments</CardTitle>
