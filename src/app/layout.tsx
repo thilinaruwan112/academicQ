@@ -2,7 +2,7 @@ import type {Metadata} from 'next';
 import { Toaster } from "@/components/ui/toaster"
 import { NProgressNext } from '@/components/ui/nprogress';
 import { ThemeProvider } from "@/components/theme-provider"
-import "plyr-react/plyr.css";
+import "plyr-react/dist/plyr.css";
 import './globals.css';
 
 export const metadata: Metadata = {

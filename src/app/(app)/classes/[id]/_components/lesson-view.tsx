@@ -3,6 +3,7 @@
 import type { Lesson } from '@/lib/types';
 import { useState, useEffect } from 'react';
 import Plyr from "plyr-react";
+import "plyr-react/dist/plyr.css";
 import { generateSummaryAction } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -63,6 +64,7 @@ export function LessonView({ lesson, isLocked }: LessonViewProps) {
       modestbranding: 1,
       controls: 0,
     },
+    autoplay: true,
   };
 
   return (
