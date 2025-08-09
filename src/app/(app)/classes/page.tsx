@@ -9,7 +9,7 @@ export default function ClassesPage() {
   return (
     <div className="space-y-8">
       <header>
-        <h1 className="text-4xl font-headline font-bold text-foreground">Classes</h1>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-headline font-bold text-foreground">Classes</h1>
         <p className="text-muted-foreground">Browse and manage class schedules and lessons.</p>
       </header>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -30,12 +30,12 @@ export default function ClassesPage() {
               <CardTitle className="font-headline text-xl mb-2">{cls.name}</CardTitle>
               <CardDescription>{cls.description}</CardDescription>
             </CardContent>
-            <CardFooter className="p-6 pt-0 flex justify-between items-center">
+            <CardFooter className="p-6 pt-0 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-4">
               <div>
                 <p className="text-sm font-medium text-foreground">{cls.teacher}</p>
                 <p className="text-xs text-muted-foreground">{cls.schedule}</p>
               </div>
-              <Button asChild size="sm">
+              <Button asChild size="sm" className="w-full sm:w-auto">
                 <Link href={`/classes/${cls.id}`}>
                   View Class
                   <ArrowRight className="ml-2 h-4 w-4" />

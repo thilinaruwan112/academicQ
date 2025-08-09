@@ -23,12 +23,12 @@ export default function LessonDetailsPage({ params }: { params: { id: string, le
   return (
     <div className="space-y-6">
         <header>
-            <div className="flex items-center text-sm text-muted-foreground mb-2">
+            <div className="flex items-center text-sm text-muted-foreground mb-2 flex-wrap">
                 <Link href="/classes" className="hover:underline">Classes</Link>
                 <ChevronRight className="h-4 w-4 mx-1" />
-                <Link href={`/classes/${classInfo.id}`} className="hover:underline">{classInfo.name}</Link>
+                <Link href={`/classes/${classInfo.id}`} className="hover:underline truncate">{classInfo.name}</Link>
             </div>
-            <h1 className="text-4xl font-headline font-bold text-foreground">{lesson.title}</h1>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-headline font-bold text-foreground">{lesson.title}</h1>
             <p className="text-muted-foreground mt-1">{lesson.description}</p>
         </header>
 

@@ -18,12 +18,12 @@ export default function StudentProfilePage({ params }: { params: { id: string } 
     allClasses.find(c => c.id === classId)
   ).filter(Boolean);
 
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(`student_id:${student.id}`)}`;
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(`student_id:${student.id}`)}`;
 
   return (
     <div className="space-y-8">
        <header>
-        <h1 className="text-4xl font-headline font-bold text-foreground">{student.name}</h1>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-headline font-bold text-foreground">{student.name}</h1>
         <p className="text-muted-foreground">Student Profile & Records</p>
       </header>
 
@@ -38,8 +38,8 @@ export default function StudentProfilePage({ params }: { params: { id: string } 
               <Image 
                 src={qrCodeUrl} 
                 alt={`QR code for ${student.name}`} 
-                width={200} 
-                height={200}
+                width={150} 
+                height={150}
                 className="rounded-lg shadow-md"
               />
             </CardContent>
@@ -49,7 +49,7 @@ export default function StudentProfilePage({ params }: { params: { id: string } 
         <div className="lg:col-span-2 space-y-8">
             <Card>
                 <CardHeader>
-                    <div className="flex justify-between items-start">
+                    <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
                         <div className="flex items-center gap-4">
                             <Avatar className="h-16 w-16">
                                 <AvatarImage src={student.avatarUrl} alt={student.name} />
@@ -60,7 +60,7 @@ export default function StudentProfilePage({ params }: { params: { id: string } 
                                 <CardDescription>{student.email}</CardDescription>
                             </div>
                         </div>
-                         <Badge variant={student.paymentStatus === 'Paid' ? 'secondary' : 'destructive'} className="text-sm">
+                         <Badge variant={student.paymentStatus === 'Paid' ? 'secondary' : 'destructive'} className="text-sm self-start sm:self-center">
                             {student.paymentStatus}
                         </Badge>
                     </div>
@@ -79,7 +79,7 @@ export default function StudentProfilePage({ params }: { params: { id: string } 
                     <div className="space-y-4">
                     {enrolledClasses.map((c) => c && (
                         <Link href={`/classes/${c.id}`} key={c.id} className="block group">
-                            <div className="flex items-center justify-between p-4 rounded-lg border hover:bg-muted/50 transition-colors">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 rounded-lg border hover:bg-muted/50 transition-colors gap-2">
                                 <div className="flex items-center gap-4">
                                     <div className="p-2 bg-accent/10 rounded-lg">
                                         <BookOpen className="h-6 w-6 text-accent"/>
@@ -89,7 +89,7 @@ export default function StudentProfilePage({ params }: { params: { id: string } 
                                         <p className="text-sm text-muted-foreground">Taught by {c.teacher}</p>
                                     </div>
                                 </div>
-                                <p className="text-sm text-muted-foreground group-hover:text-accent transition-colors">{c.schedule}</p>
+                                <p className="text-sm text-muted-foreground group-hover:text-accent transition-colors self-end sm:self-center">{c.schedule}</p>
                             </div>
                         </Link>
                     ))}

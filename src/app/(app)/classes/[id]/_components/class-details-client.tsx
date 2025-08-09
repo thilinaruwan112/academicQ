@@ -25,7 +25,7 @@ export function ClassDetailsClient({ classInfo, enrolledStudents, lessons }: Cla
   return (
     <div className="space-y-8">
       <header>
-        <h1 className="text-4xl font-headline font-bold text-foreground">{classInfo.name}</h1>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-headline font-bold text-foreground">{classInfo.name}</h1>
         <p className="text-muted-foreground">{classInfo.description}</p>
         <p className="text-sm text-muted-foreground mt-2">Taught by {classInfo.teacher} &bull; {classInfo.schedule}</p>
       </header>
@@ -33,7 +33,7 @@ export function ClassDetailsClient({ classInfo, enrolledStudents, lessons }: Cla
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
            <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
+            <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-4">
                 <div>
                     <CardTitle className="flex items-center gap-2">
                         <ListVideo />
@@ -43,7 +43,7 @@ export function ClassDetailsClient({ classInfo, enrolledStudents, lessons }: Cla
                         {selectedStudent ? `Viewing as ${selectedStudent.name}. Access is based on payment status.` : 'Select a student to see lesson access.'}
                     </CardDescription>
                 </div>
-                 <div className="w-48">
+                 <div className="w-full sm:w-48">
                     <Select onValueChange={setSelectedStudentId} defaultValue={selectedStudentId || undefined}>
                         <SelectTrigger id="student-view" aria-label="View as student">
                             <Eye className="mr-2 h-4 w-4" />
