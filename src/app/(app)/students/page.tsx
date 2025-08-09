@@ -5,7 +5,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { users, classes } from "@/lib/data";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, UserPlus } from "lucide-react";
+import { AddStudentDialog } from "./_components/add-student-dialog";
 
 export default function StudentsPage() {
   const getStudentClasses = (classIds: string[]) => {
@@ -15,9 +16,12 @@ export default function StudentsPage() {
   
   return (
     <div className="space-y-8">
-      <header>
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-headline font-bold text-foreground">Students</h1>
-        <p className="text-muted-foreground">Manage your student database.</p>
+      <header className="flex items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-headline font-bold text-foreground">Students</h1>
+          <p className="text-muted-foreground">Manage your student database.</p>
+        </div>
+        <AddStudentDialog />
       </header>
       
       <Card>
