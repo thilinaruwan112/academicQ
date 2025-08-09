@@ -1,9 +1,10 @@
-'use client'
+'use client';
 import { Logo } from '@/components/icons';
 import {
   SidebarProvider,
   Sidebar,
   SidebarHeader,
+  SidebarTrigger,
   SidebarContent,
   SidebarMenu,
   SidebarMenuItem,
@@ -22,12 +23,12 @@ export default function AppLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const isActive = (path: string) => pathname === path;
+  const isActive = (path: string) => pathname.startsWith(path);
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen">
-        <Sidebar>
+      <div className="flex min-h-screen bg-background">
+        <Sidebar collapsible="icon">
           <SidebarHeader>
             <Link href="/dashboard" className="block">
               <Logo className="text-foreground" />
@@ -38,7 +39,7 @@ export default function AppLayout({
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
-                  isActive={isActive('/dashboard')}
+                  isActive={pathname === '/dashboard'}
                   tooltip="Dashboard"
                 >
                   <Link href="/dashboard">
@@ -50,7 +51,7 @@ export default function AppLayout({
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
-                  isActive={pathname.startsWith('/students')}
+                  isActive={isActive('/students')}
                   tooltip="Students"
                 >
                   <Link href="/students">
@@ -62,7 +63,7 @@ export default function AppLayout({
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
-                  isActive={pathname.startsWith('/classes')}
+                  isActive={isActive('/classes')}
                   tooltip="Classes"
                 >
                   <Link href="/classes">
@@ -74,23 +75,29 @@ export default function AppLayout({
             </SidebarMenu>
           </SidebarContent>
           <SidebarFooter>
-             <SidebarMenu>
-                <SidebarMenuItem>
-                  <ThemeSwitcher />
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton tooltip="Settings">
-                    <Settings />
-                    <span>Settings</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              </SidebarMenu>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <ThemeSwitcher />
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton tooltip="Settings">
+                  <Settings />
+                  <span>Settings</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
           </SidebarFooter>
         </Sidebar>
         <SidebarInset>
-          <div className="min-h-screen w-full bg-background p-4 sm:p-6 lg:p-8">
-            {children}
-          </div>
+            <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+                <SidebarTrigger className="md:hidden" />
+                <div className="flex-1">
+                    {/* Header content can go here if needed */}
+                </div>
+            </header>
+            <main className="p-4 sm:px-6 sm:py-0">
+                {children}
+            </main>
         </SidebarInset>
       </div>
     </SidebarProvider>
