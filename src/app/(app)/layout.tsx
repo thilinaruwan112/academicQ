@@ -12,10 +12,11 @@ import {
   SidebarInset,
   SidebarFooter,
 } from '@/components/ui/sidebar';
-import { usePathname } from 'next/navigation';
-import { BookOpen, LayoutDashboard, Users, Settings } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import { BookOpen, LayoutDashboard, Users, Settings, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import { ThemeSwitcher } from '@/components/theme-switcher';
+import { useToast } from '@/hooks/use-toast';
 
 export default function AppLayout({
   children,
@@ -23,7 +24,18 @@ export default function AppLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const { toast } = useToast();
   const isActive = (path: string) => pathname.startsWith(path);
+
+  const handleSignOut = () => {
+    // In a real app, you would also clear session/authentication state here
+    toast({
+      title: 'Signed Out',
+      description: 'You have been successfully signed out.',
+    });
+    router.push('/login');
+  };
 
   return (
     <SidebarProvider>
@@ -83,6 +95,12 @@ export default function AppLayout({
                 <SidebarMenuButton tooltip="Settings">
                   <Settings />
                   <span>Settings</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+               <SidebarMenuItem>
+                <SidebarMenuButton onClick={handleSignOut} tooltip="Sign Out">
+                  <LogOut />
+                  <span>Sign Out</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
