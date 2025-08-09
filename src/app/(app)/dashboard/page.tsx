@@ -14,7 +14,7 @@ export default function DashboardPage() {
   const institute = institutes[0]; // In a real app, this would come from the user's session
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4">
       <header>
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-headline font-bold text-foreground">{institute.name} Dashboard</h1>
         <p className="text-muted-foreground">Welcome! Here's an overview of your institute's activity.</p>
