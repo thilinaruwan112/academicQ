@@ -360,7 +360,7 @@ const SidebarContent = React.forwardRef<
       ref={ref}
       data-sidebar="content"
       className={cn(
-        "flex-1",
+        "flex-1 py-4",
         className
       )}
       {...props}
