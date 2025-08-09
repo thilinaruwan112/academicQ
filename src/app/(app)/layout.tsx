@@ -14,6 +14,7 @@ import {
 import { usePathname } from 'next/navigation';
 import { BookOpen, LayoutDashboard, Users, Settings } from 'lucide-react';
 import Link from 'next/link';
+import { ThemeSwitcher } from '@/components/theme-switcher';
 
 export default function AppLayout({
   children,
@@ -74,6 +75,9 @@ export default function AppLayout({
           </SidebarContent>
           <SidebarFooter>
              <SidebarMenu>
+                <SidebarMenuItem>
+                  <ThemeSwitcher />
+                </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton tooltip="Settings">
                     <Settings />
