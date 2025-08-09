@@ -1,13 +1,15 @@
 'use client';
 
 import type { Lesson } from '@/lib/types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import ReactPlayer from 'react-player/youtube';
 import { generateSummaryAction } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Wand2, Loader2, Video, AlertCircle } from 'lucide-react';
+import { Wand2, Loader2, Video, AlertCircle, PlayCircle } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface LessonViewProps {
   lesson: Lesson;
@@ -19,6 +21,13 @@ export function LessonView({ lesson, isLocked }: LessonViewProps) {
   const [summary, setSummary] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  
+  // This state will ensure the component is only rendered on the client, avoiding hydration issues.
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   
   const handleSummarize = async () => {
     setIsLoading(true);
@@ -79,13 +88,26 @@ export function LessonView({ lesson, isLocked }: LessonViewProps) {
             </CardHeader>
             <CardContent>
                 <div className="w-full aspect-video bg-background rounded-lg flex items-center justify-center border overflow-hidden">
-                    <iframe
-                        className="w-full h-full"
-                        src={lesson.youtubeUrl}
-                        title={lesson.title}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                    ></iframe>
+                   {isClient ? (
+                    <ReactPlayer
+                      url={lesson.youtubeUrl}
+                      width="100%"
+                      height="100%"
+                      controls={true}
+                      config={{
+                        youtube: {
+                          playerVars: { 
+                            showinfo: 0,
+                            controls: 1,
+                            modestbranding: 1,
+                            rel: 0,
+                           }
+                        }
+                      }}
+                    />
+                  ) : (
+                    <Skeleton className="w-full h-full" />
+                  )}
                 </div>
             </CardContent>
         </Card>
