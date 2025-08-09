@@ -2,13 +2,14 @@
 
 import type { Lesson } from '@/lib/types';
 import { useState, useEffect } from 'react';
-import ReactPlayer from 'react-player';
+import Plyr from "plyr-react";
+import "plyr-react/dist/plyr.css";
 import { generateSummaryAction } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Wand2, Loader2, Video, AlertCircle } from 'lucide-react';
+import { Wand2, Loader2, Video, AlertCircle, PlayCircle } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface LessonViewProps {
@@ -22,8 +23,8 @@ export function LessonView({ lesson, isLocked }: LessonViewProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   
-  // This state will ensure the component is only rendered on the client, avoiding hydration issues.
   const [isClient, setIsClient] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -34,11 +35,6 @@ export function LessonView({ lesson, isLocked }: LessonViewProps) {
     setError('');
     setSummary('');
 
-    // The summarization logic expects a data URI, but we have a URL.
-    // For this demonstration, we'll show an error.
-    // A real implementation would need to either:
-    // 1. Download the video server-side from the URL.
-    // 2. Use a different AI model that accepts a URL directly.
     setError("AI summarization from a YouTube URL is not yet implemented.");
     toast({
         title: "Feature Not Available",
@@ -46,26 +42,6 @@ export function LessonView({ lesson, isLocked }: LessonViewProps) {
         variant: "destructive",
     });
     setIsLoading(false);
-
-    // Placeholder for actual summarization call if it were implemented
-    /*
-    const result = await generateSummaryAction(lesson.youtubeUrl);
-    if (result.error) {
-      setError(result.error);
-      toast({
-        title: "Summarization Failed",
-        description: result.error,
-        variant: "destructive",
-      });
-    } else if (result.summary) {
-      setSummary(result.summary);
-      toast({
-        title: "Summary Generated!",
-        description: "The AI has successfully summarized the video.",
-      });
-    }
-    setIsLoading(false);
-    */
   };
 
   if (isLocked) {
@@ -80,6 +56,15 @@ export function LessonView({ lesson, isLocked }: LessonViewProps) {
     );
   }
 
+  const plyrOptions = {
+    youtube: {
+      noCookie: true,
+      rel: 0,
+      showinfo: 0,
+      modestbranding: 1,
+    },
+  };
+
   return (
     <div className="space-y-6">
         <Card className="bg-muted/30">
@@ -87,32 +72,33 @@ export function LessonView({ lesson, isLocked }: LessonViewProps) {
                 <CardTitle className="flex items-center gap-2"><Video />Lesson Recording</CardTitle>
             </CardHeader>
             <CardContent>
-                <div className="w-full aspect-video bg-background rounded-lg flex items-center justify-center border overflow-hidden">
+                <div className="w-full aspect-video bg-background rounded-lg flex items-center justify-center border overflow-hidden relative">
                    {isClient ? (
-                    <div onContextMenu={(e) => e.preventDefault()} className="w-full h-full">
-                        <ReactPlayer
-                          url={lesson.youtubeUrl}
-                          width="100%"
-                          height="100%"
-                          controls={true}
-                          config={{
-                            youtube: {
-                              playerVars: { 
-                                showinfo: 0,
-                                controls: 1,
-                                modestbranding: 1,
-                                rel: 0,
-                              }
-                            },
-                            file: {
-                                attributes: {
-                                    onContextMenu: (e: React.MouseEvent<HTMLVideoElement>) => e.preventDefault(),
-                                    controlsList: 'nodownload'
-                                }
-                            }
-                          }}
-                        />
-                    </div>
+                     <>
+                      {!showVideo ? (
+                        <div className="text-center">
+                           <Button variant="ghost" size="lg" onClick={() => setShowVideo(true)}>
+                              <PlayCircle className="h-16 w-16 text-primary" />
+                           </Button>
+                           <p className="text-muted-foreground mt-2">Click to play video</p>
+                        </div>
+                      ) : (
+                         <div onContextMenu={(e) => e.preventDefault()} className="w-full h-full">
+                            <Plyr 
+                              source={{
+                                type: 'video',
+                                sources: [
+                                  {
+                                    src: lesson.youtubeUrl,
+                                    provider: 'youtube',
+                                  },
+                                ],
+                              }}
+                              options={plyrOptions}
+                            />
+                        </div>
+                      )}
+                     </>
                   ) : (
                     <Skeleton className="w-full h-full" />
                   )}
