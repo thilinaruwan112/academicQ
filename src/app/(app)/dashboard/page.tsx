@@ -2,9 +2,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { students, classes } from "@/lib/data";
-import { Users, BookOpen, AlertCircle } from "lucide-react";
+import { Users, BookOpen, AlertCircle, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function DashboardPage() {
   const totalStudents = students.length;
@@ -56,7 +57,38 @@ export default function DashboardPage() {
           <CardTitle>Students with Pending Payments</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
+          {/* Mobile View - Cards */}
+          <div className="md:hidden">
+             {pendingPayments.length > 0 ? (
+                <div className="space-y-4">
+                  {pendingPayments.map((student) => (
+                    <div key={student.id} className="border rounded-lg p-4 flex items-center justify-between gap-4">
+                       <div className="flex items-center gap-4">
+                        <Avatar>
+                          <AvatarImage src={student.avatarUrl} alt={student.name} />
+                          <AvatarFallback>{student.name.charAt(0)}</AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="font-medium">{student.name}</p>
+                          <p className="text-sm text-muted-foreground">{student.email}</p>
+                           <Badge variant="destructive" className="mt-2">{student.paymentStatus}</Badge>
+                        </div>
+                       </div>
+                       <Button asChild variant="ghost" size="icon">
+                        <Link href={`/students/${student.id}`} aria-label={`View ${student.name}`}>
+                          <ArrowRight className="h-4 w-4" />
+                        </Link>
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-center text-muted-foreground">All student payments are up to date.</p>
+              )}
+          </div>
+
+          {/* Desktop View - Table */}
+          <div className="hidden md:block overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>
