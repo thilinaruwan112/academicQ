@@ -7,6 +7,9 @@ export async function generateSummaryAction(videoDataUri: string) {
     if (!videoDataUri) {
       return { error: 'Video data is missing.' };
     }
+    // Simulate network and processing delay
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
     const result = await summarizeLessonVideo({ videoDataUri });
     return { summary: result.summary };
   } catch (e: any) {

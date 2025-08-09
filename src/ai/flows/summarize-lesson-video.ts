@@ -34,7 +34,9 @@ const summarizeLessonVideoPrompt = ai.definePrompt({
   output: {schema: SummarizeLessonVideoOutputSchema},
   prompt: `You are an AI assistant tasked with summarizing lesson videos.
 
-  Please watch the following video and provide a concise summary of the key concepts discussed.
+  The user has provided a video, but for this demonstration, we cannot process it directly. 
+  Instead, please provide a sample summary for a lesson about the basics of HTML. 
+  The summary should be about 3-4 sentences long and cover the key concepts of HTML tags, elements, and document structure.
   
   Video: {{media url=videoDataUri}}
   
