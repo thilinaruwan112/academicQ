@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useMemo } from 'react';
@@ -12,6 +13,7 @@ import Link from 'next/link';
 import { users, payments as allPayments } from "@/lib/data";
 import { DollarSign, Receipt, AlertCircle, Search, ArrowRight } from "lucide-react";
 import { format } from 'date-fns';
+import { AddPaymentDialog } from './_components/add-payment-dialog';
 
 type PaymentStatus = "All" | "Paid" | "Pending";
 
@@ -56,9 +58,12 @@ export default function PaymentsPage() {
 
   return (
     <div className="space-y-8">
-      <header>
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-headline font-bold text-foreground">Payments</h1>
-        <p className="text-muted-foreground">Track and manage all student payments.</p>
+      <header className="flex items-center justify-between gap-4">
+        <div>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-headline font-bold text-foreground">Payments</h1>
+            <p className="text-muted-foreground">Track and manage all student payments.</p>
+        </div>
+        <AddPaymentDialog />
       </header>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
