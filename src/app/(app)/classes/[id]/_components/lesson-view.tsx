@@ -141,46 +141,6 @@ export function LessonView({ lesson, isLocked }: LessonViewProps) {
                 </div>
             </CardContent>
         </Card>
-
-        <Card>
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2"><Wand2 />AI Video Summarization</CardTitle>
-                <CardDescription>Generate a summary from the lesson video.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-                 <Button onClick={handleSummarize} disabled={isLoading}>
-                {isLoading ? (
-                    <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Generating...
-                    </>
-                ) : (
-                    <>
-                    <Wand2 className="mr-2 h-4 w-4" />
-                    Generate Summary
-                    </>
-                )}
-                </Button>
-
-                {error && (
-                    <Alert variant="destructive">
-                        <AlertCircle className="h-4 w-4" />
-                        <AlertTitle>Error</AlertTitle>
-                        <AlertDescription>{error}</AlertDescription>
-                    </Alert>
-                )}
-
-                {summary && (
-                    <Alert>
-                        <Wand2 className="h-4 w-4" />
-                        <AlertTitle>Generated Summary</AlertTitle>
-                        <AlertDescription className="prose prose-sm dark:prose-invert">
-                            <p>{summary}</p>
-                        </AlertDescription>
-                    </Alert>
-                )}
-            </CardContent>
-        </Card>
     </div>
   );
 }
