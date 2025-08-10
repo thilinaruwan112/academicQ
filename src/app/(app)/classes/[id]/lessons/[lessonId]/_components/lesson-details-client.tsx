@@ -1,7 +1,8 @@
+
 'use client';
 
 import type { Class, Lesson, User } from '@/lib/types';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { LessonView } from '../../../_components/lesson-view';
@@ -18,7 +19,10 @@ interface LessonDetailsClientProps {
 export function LessonDetailsClient({ lesson, enrolledStudents, otherLessons, classInfo }: LessonDetailsClientProps) {
   const [selectedStudentId, setSelectedStudentId] = useState<string | null>(enrolledStudents[0]?.id || null);
 
-  const selectedStudent = enrolledStudents.find(s => s.id === selectedStudentId);
+  const selectedStudent = useMemo(() => {
+      return enrolledStudents.find(s => s.id === selectedStudentId);
+  }, [selectedStudentId, enrolledStudents]);
+  
   const isPaid = !!selectedStudent && selectedStudent.paymentStatus === 'Paid';
 
   return (
