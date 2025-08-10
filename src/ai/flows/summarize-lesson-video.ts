@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview This file defines a Genkit flow for summarizing lesson videos using AI.
@@ -32,15 +33,9 @@ const summarizeLessonVideoPrompt = ai.definePrompt({
   name: 'summarizeLessonVideoPrompt',
   input: {schema: SummarizeLessonVideoInputSchema},
   output: {schema: SummarizeLessonVideoOutputSchema},
-  prompt: `You are an AI assistant tasked with summarizing lesson videos.
-
-  The user has provided a video, but for this demonstration, we cannot process it directly. 
-  Instead, please provide a sample summary for a lesson about the basics of HTML. 
+  prompt: `You are an AI assistant tasked with providing a sample summary for a lesson about the basics of HTML. 
   The summary should be about 3-4 sentences long and cover the key concepts of HTML tags, elements, and document structure.
-  
-  Video: {{media url=videoDataUri}}
-  
-  Summary: `,
+  `,
 });
 
 const summarizeLessonVideoFlow = ai.defineFlow(

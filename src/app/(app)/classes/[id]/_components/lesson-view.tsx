@@ -1,3 +1,4 @@
+
 'use client';
 
 import type { Lesson } from '@/lib/types';
@@ -40,7 +41,7 @@ export function LessonView({ lesson, isLocked }: LessonViewProps) {
 
     // In a real app, you would get the video data from the source.
     // For this demo, we can't download from YouTube, so we send a placeholder.
-    const placeholderVideoDataUri = 'data:video/mp4;base64,AAAA...';
+    const placeholderVideoDataUri = 'data:video/mp4;base64,AAAAHGZ0eXBtcDQyAAAAAWlzb21tcDQy';
     
     const result = await generateSummaryAction(placeholderVideoDataUri);
 
