@@ -28,13 +28,17 @@ export const classes: Class[] = [
 ];
 
 export const lessons: Lesson[] = [
-  { id: 'l1', classId: 'c1', title: 'Lesson 1: The Basics of HTML', description: 'An introduction to HTML tags and document structure.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/pQN-pnXPaVg' },
-  { id: 'l2', classId: 'c1', title: 'Lesson 2: Styling with CSS', description: 'Learn how to use CSS to style your web pages.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/OEV8gMkCHXQ' },
-  { id: 'l3', classId: 'c2', title: 'Lesson 1: Understanding Hooks', description: 'A deep dive into useState and useEffect.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/TNhaISOUy6Q' },
-  { id: 'l4', classId: 'c2', title: 'Lesson 2: State Management with Context', description: 'How to manage global state with the Context API.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/5LrDIWkK_Bc' },
-  { id: 'l5', classId: 'c3', title: 'Lesson 1: The Principles of Design', description: 'Learn about color theory, typography, and layout.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/s_i_FPx9k-Q' },
-  { id: 'l6', classId: 'c3', title: 'Lesson 2: Prototyping in Figma', description: 'A hands-on guide to creating interactive prototypes.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/5i_i_h5gS7M4I' },
+  { id: 'l1', classId: 'c1', title: 'Lesson 1: The Basics of HTML', description: 'An introduction to HTML tags and document structure.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/pQN-pnXPaVg', date: '2024-07-05T10:00:00Z' },
+  { id: 'l2', classId: 'c1', title: 'Lesson 2: Styling with CSS', description: 'Learn how to use CSS to style your web pages.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/OEV8gMkCHXQ', date: '2024-07-12T10:00:00Z' },
+  { id: 'l10', classId: 'c1', title: 'Lesson 3: Intro to JavaScript', description: 'Getting started with variables and functions.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/W6NZfCO5SIk', date: '2024-08-02T10:00:00Z' },
+  { id: 'l3', classId: 'c2', title: 'Lesson 1: Understanding Hooks', description: 'A deep dive into useState and useEffect.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/TNhaISOUy6Q', date: '2024-07-02T14:00:00Z' },
+  { id: 'l4', classId: 'c2', title: 'Lesson 2: State Management with Context', description: 'How to manage global state with the Context API.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/5LrDIWkK_Bc', date: '2024-07-09T14:00:00Z' },
+  { id: 'l5', classId: 'c3', title: 'Lesson 1: The Principles of Design', description: 'Learn about color theory, typography, and layout.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/s_i_FPx9k-Q', date: '2024-06-03T13:00:00Z' },
+  { id: 'l6', classId: 'c3', title: 'Lesson 2: Prototyping in Figma', description: 'A hands-on guide to creating interactive prototypes.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/5i_i_h5gS7M4I', date: '2024-06-10T13:00:00Z' },
+  { id: 'l7', classId: 'c3', title: 'Lesson 3: Advanced Figma Techniques', description: 'Components, variants, and auto layout.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/e_l6y4QZAPo', date: '2024-07-01T13:00:00Z' },
+  { id: 'l8', classId: 'c3', title: 'Lesson 4: User Testing', description: 'Learn how to conduct effective user testing sessions.', videoUrl: 'placeholder', youtubeUrl: 'https://www.youtube.com/embed/T4J9t-A0P_E', date: '2024-07-08T13:00:00Z' },
 ];
+
 
 export const institutes: Institute[] = [
   { id: 'i1', name: 'Grand University', adminEmail: 'admin@grand.edu' }

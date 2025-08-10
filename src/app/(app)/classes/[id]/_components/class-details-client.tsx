@@ -1,14 +1,17 @@
 'use client';
 
 import type { Class, User, Lesson } from '@/lib/types';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Lock, Unlock, Users, ListVideo, Eye, ArrowRight, FileVideo } from 'lucide-react';
+import { Lock, Unlock, Users, ListVideo, Eye, ArrowRight, FileVideo, Calendar } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { format } from 'date-fns';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+
 
 interface ClassDetailsClientProps {
   classInfo: Class;
@@ -21,6 +24,24 @@ export function ClassDetailsClient({ classInfo, enrolledStudents, lessons }: Cla
 
   const selectedStudent = enrolledStudents.find(s => s.id === selectedStudentId);
   const isPaid = selectedStudent?.paymentStatus === 'Paid';
+
+  const lessonsByMonth = useMemo(() => {
+    return lessons.reduce((acc, lesson) => {
+      const month = format(new Date(lesson.date), 'MMMM yyyy');
+      if (!acc[month]) {
+        acc[month] = [];
+      }
+      acc[month].push(lesson);
+      return acc;
+    }, {} as Record<string, Lesson[]>);
+  }, [lessons]);
+  
+  const sortedMonths = useMemo(() => {
+    return Object.keys(lessonsByMonth).sort((a, b) => {
+        return new Date(b).getTime() - new Date(a).getTime();
+    });
+  }, [lessonsByMonth]);
+
 
   return (
     <div className="space-y-8">
@@ -58,11 +79,29 @@ export function ClassDetailsClient({ classInfo, enrolledStudents, lessons }: Cla
                 </div>
             </CardHeader>
             <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {lessons.map(lesson => (
-                        <LessonCard key={lesson.id} lesson={lesson} isLocked={!isPaid} classId={classInfo.id} />
-                    ))}
-                </div>
+                {sortedMonths.length > 0 ? (
+                    <Accordion type="single" collapsible defaultValue={sortedMonths[0]} className="w-full">
+                        {sortedMonths.map(month => (
+                            <AccordionItem value={month} key={month}>
+                                <AccordionTrigger className="text-lg font-medium hover:no-underline">
+                                    <div className="flex items-center gap-2">
+                                        <Calendar className="h-5 w-5 text-muted-foreground"/>
+                                        {month}
+                                    </div>
+                                </AccordionTrigger>
+                                <AccordionContent>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+                                        {lessonsByMonth[month].map(lesson => (
+                                            <LessonCard key={lesson.id} lesson={lesson} isLocked={!isPaid} classId={classInfo.id} />
+                                        ))}
+                                    </div>
+                                </AccordionContent>
+                            </AccordionItem>
+                        ))}
+                    </Accordion>
+                ) : (
+                    <p className="text-center text-muted-foreground mt-4">No lessons found for this class.</p>
+                )}
                 {!selectedStudent && <p className="text-center text-muted-foreground mt-4">Please select a student to view lesson content.</p>}
             </CardContent>
            </Card>

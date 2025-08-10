@@ -35,6 +35,7 @@ export interface Lesson {
   videoUrl: string;
   youtubeUrl: string;
   classId: string;
+  date: string; // ISO 8601 date string
 }
 
 export interface Institute {
