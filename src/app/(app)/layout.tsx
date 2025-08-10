@@ -56,7 +56,7 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
               >
                 <Link href="/dashboard">
                   <LayoutDashboard />
-                  <span>Dashboard</span>
+                  <span className="group-data-[state=collapsed]:hidden">Dashboard</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -68,7 +68,7 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
               >
                 <Link href="/students">
                   <Users />
-                  <span>Students</span>
+                  <span className="group-data-[state=collapsed]:hidden">Students</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -80,7 +80,7 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
               >
                 <Link href="/classes">
                   <BookOpen />
-                  <span>Classes</span>
+                  <span className="group-data-[state=collapsed]:hidden">Classes</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -94,16 +94,32 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
                 <span className="sr-only">Sign Out</span>
              </SidebarMenuButton>
            </div>
-           <div className={cn("flex items-center gap-3", state === 'collapsed' && 'hidden')}>
-              <Avatar className="h-9 w-9">
-                  <AvatarImage src="https://placehold.co/100x100.png" alt="System Administrator" />
-                  <AvatarFallback>SA</AvatarFallback>
-              </Avatar>
-              <div>
-                  <p className="text-sm font-semibold text-sidebar-footer-foreground">System Administrator</p>
-                  <p className="text-xs text-muted-foreground group-hover:text-sidebar-footer-foreground">hmdilipkf@gmail.com</p>
-              </div>
-           </div>
+           <SidebarMenuButton 
+                tooltip={{
+                    children: (
+                        <div>
+                            <p className="text-sm font-semibold text-sidebar-footer-foreground">System Administrator</p>
+                            <p className="text-xs text-muted-foreground group-hover:text-sidebar-footer-foreground">hmdilipkf@gmail.com</p>
+                        </div>
+                    ),
+                    className: "bg-sidebar-footer border-none p-2"
+                }}
+                className={cn(
+                    "w-full h-auto p-0 bg-transparent hover:bg-transparent",
+                    state === 'collapsed' && 'justify-center'
+                )}
+           >
+            <div className={cn("flex items-center gap-3")}>
+                <Avatar className="h-9 w-9">
+                    <AvatarImage src="https://placehold.co/100x100.png" alt="System Administrator" data-ai-hint="person avatar" />
+                    <AvatarFallback>SA</AvatarFallback>
+                </Avatar>
+                <div className="group-data-[state=collapsed]:hidden">
+                    <p className="text-sm font-semibold text-sidebar-footer-foreground">System Administrator</p>
+                    <p className="text-xs text-muted-foreground group-hover:text-sidebar-footer-foreground">hmdilipkf@gmail.com</p>
+                </div>
+            </div>
+           </SidebarMenuButton>
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
