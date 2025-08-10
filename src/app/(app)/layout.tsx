@@ -87,7 +87,7 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
           </SidebarMenu>
         </SidebarContent>
         <SidebarFooter>
-            <div className={cn("flex items-center gap-2 p-4", state === 'collapsed' && 'p-2 justify-center')}>
+            <div className={cn("flex items-center p-4", state === 'collapsed' ? 'justify-center px-2' : 'gap-2')}>
               <ThemeSwitcher />
               <SidebarMenuButton tooltip="Settings" size="icon" variant="ghost">
                 <Settings />
