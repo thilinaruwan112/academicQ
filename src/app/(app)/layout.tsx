@@ -94,13 +94,13 @@ export default function AppLayout({
               <SidebarMenuItem>
                 <SidebarMenuButton tooltip="Settings">
                   <Settings />
-                  <span>Settings</span>
+                  <span className="sr-only">Settings</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
                <SidebarMenuItem>
                 <SidebarMenuButton onClick={handleSignOut} tooltip="Sign Out">
                   <LogOut />
-                  <span>Sign Out</span>
+                  <span className="sr-only">Sign Out</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
