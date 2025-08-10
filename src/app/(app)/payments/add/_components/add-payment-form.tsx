@@ -7,18 +7,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
-import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -36,10 +26,13 @@ import {
 } from '@/components/ui/select';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { users as allUsers, payments as allPayments } from '@/lib/data';
-import { Loader2, DollarSign, CalendarIcon, Info } from 'lucide-react';
+import { Loader2, DollarSign, CalendarIcon, Info, ArrowLeft } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const addPaymentSchema = z.object({
   studentId: z.string({ required_error: 'Please select a student.' }),
@@ -49,10 +42,10 @@ const addPaymentSchema = z.object({
 
 type AddPaymentFormValues = z.infer<typeof addPaymentSchema>;
 
-export function AddPaymentDialog() {
-  const [open, setOpen] = useState(false);
+export function AddPaymentForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
 
   const form = useForm<AddPaymentFormValues>({
     resolver: zodResolver(addPaymentSchema),
@@ -80,33 +73,24 @@ export function AddPaymentDialog() {
     // In a real application, you would make an API call here to save the payment.
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
-    setIsSubmitting(false);
-    setOpen(false);
-    form.reset();
-
     toast({
       title: 'Payment Recorded (Simulation)',
       description: `Payment of $${data.amount} for ${studentInfo?.name} on ${format(data.date, 'PPP')} has been recorded.`,
     });
+    
+    setIsSubmitting(false);
+    form.reset();
+    router.push('/payments');
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button>
-          <DollarSign className="mr-2 h-4 w-4" />
-          Add Payment
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Record a New Payment</DialogTitle>
-          <DialogDescription>
-            Select a student and enter the payment details below.
-          </DialogDescription>
-        </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-4">
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <Card className="max-w-2xl mx-auto">
+          <CardHeader>
+            <CardTitle>Payment Details</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
             <FormField
               control={form.control}
               name="studentId"
@@ -204,22 +188,27 @@ export function AddPaymentDialog() {
                 </FormItem>
               )}
             />
-
-            <DialogFooter>
-              <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Saving...
-                  </>
-                ) : (
-                  'Record Payment'
-                )}
-              </Button>
-            </DialogFooter>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+          </CardContent>
+          <CardFooter className="flex justify-between">
+            <Button variant="outline" asChild>
+                <Link href="/payments">
+                    <ArrowLeft className="mr-2 h-4 w-4"/>
+                    Cancel
+                </Link>
+            </Button>
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Saving...
+                </>
+              ) : (
+                'Record Payment'
+              )}
+            </Button>
+          </CardFooter>
+        </Card>
+      </form>
+    </Form>
   );
 }
