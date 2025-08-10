@@ -8,8 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Users, ListVideo, Eye, Calendar, Lock, Unlock } from 'lucide-react';
 import { format, getMonth, getYear } from 'date-fns';
-import { LessonSummary } from './lesson-summary';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 interface ClassDetailsClientProps {
   classInfo: Class;
@@ -19,16 +19,13 @@ interface ClassDetailsClientProps {
 
 export function ClassDetailsClient({ classInfo, enrolledStudents, lessons }: ClassDetailsClientProps) {
   const [selectedStudentId, setSelectedStudentId] = useState<string | null>(enrolledStudents[0]?.id || null);
-  
-  const initialMonth = lessons.length > 0 ? `${getYear(new Date(lessons[0].date))}-${getMonth(new Date(lessons[0].date))}`: null;
-  const [selectedMonth, setSelectedMonth] = useState<string | null>(initialMonth);
 
   const selectedStudent = enrolledStudents.find(s => s.id === selectedStudentId);
   const isPaid = selectedStudent?.paymentStatus === 'Paid';
 
   const lessonsByMonth = useMemo(() => {
     return lessons.reduce((acc, lesson) => {
-      const monthKey = `${getYear(new Date(lesson.date))}-${getMonth(new Date(lesson.date))}`;
+      const monthKey = `${getYear(new Date(lesson.date))}-${(getMonth(new Date(lesson.date)) + 1).toString().padStart(2, '0')}`;
       if (!acc[monthKey]) {
         acc[monthKey] = [];
       }
@@ -44,10 +41,6 @@ export function ClassDetailsClient({ classInfo, enrolledStudents, lessons }: Cla
         return yearB - yearA || monthB - monthA;
     });
   }, [lessonsByMonth]);
-  
-  const handleMonthSelect = (monthKey: string) => {
-    setSelectedMonth(monthKey);
-  }
 
   return (
     <div className="space-y-8">
@@ -85,35 +78,25 @@ export function ClassDetailsClient({ classInfo, enrolledStudents, lessons }: Cla
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {sortedMonths.map(monthKey => {
                             const [year, monthNum] = monthKey.split('-').map(Number);
-                            const monthName = format(new Date(year, monthNum), 'MMMM yyyy');
+                            const monthName = format(new Date(year, monthNum - 1), 'MMMM yyyy');
                             const monthLessons = lessonsByMonth[monthKey];
                             return (
                                 <MonthCard 
                                     key={monthKey}
+                                    classId={classInfo.id}
+                                    monthId={monthKey}
                                     monthName={monthName}
                                     lessonCount={monthLessons.length}
                                     isLocked={!isPaid}
-                                    isSelected={selectedMonth === monthKey}
-                                    onClick={() => handleMonthSelect(monthKey)}
                                 />
                             )
                         })}
                     </div>
                 </CardContent>
            </Card>
-
-            {selectedMonth && (
-                <LessonSummary 
-                    classId={classInfo.id}
-                    lessons={lessonsByMonth[selectedMonth]} 
-                    isLocked={!isPaid}
-                    monthName={format(new Date(selectedMonth.split('-')[0], selectedMonth.split('-')[1]), 'MMMM yyyy')}
-                />
-            )}
-
         </div>
 
         <div className="lg:col-span-1">
@@ -149,26 +132,31 @@ export function ClassDetailsClient({ classInfo, enrolledStudents, lessons }: Cla
 }
 
 
-function MonthCard({ monthName, lessonCount, isLocked, isSelected, onClick }: { monthName: string, lessonCount: number, isLocked: boolean, isSelected: boolean, onClick: () => void }) {
+function MonthCard({ classId, monthId, monthName, lessonCount, isLocked }: { classId: string, monthId: string, monthName: string, lessonCount: number, isLocked: boolean }) {
+    const cardContent = (
+        <Card className="h-full group-hover:shadow-lg transition-shadow">
+            <CardHeader>
+                <div className="flex justify-between items-start">
+                    <CardTitle className="text-lg">{monthName}</CardTitle>
+                    {isLocked ? <Lock className="h-5 w-5 text-destructive"/> : <Unlock className="h-5 w-5 text-green-500" />}
+                </div>
+            </CardHeader>
+            <CardContent>
+                <div className="flex items-center gap-2 text-muted-foreground">
+                    <ListVideo className="h-4 w-4" />
+                    <span className="text-sm">{lessonCount} {lessonCount === 1 ? 'lesson' : 'lessons'}</span>
+                </div>
+            </CardContent>
+        </Card>
+    );
+
+    if (isLocked) {
+        return <div className="cursor-not-allowed opacity-70 group">{cardContent}</div>;
+    }
+
     return (
-        <button onClick={onClick} className={cn(
-            "text-left p-0 w-full rounded-lg transition-all",
-            isSelected ? "ring-2 ring-primary shadow-lg" : "hover:shadow-md"
-        )}>
-            <Card className="h-full">
-                <CardHeader>
-                    <div className="flex justify-between items-start">
-                        <CardTitle className="text-lg">{monthName}</CardTitle>
-                        {isLocked ? <Lock className="h-5 w-5 text-destructive"/> : <Unlock className="h-5 w-5 text-green-500" />}
-                    </div>
-                </CardHeader>
-                <CardContent>
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                        <ListVideo className="h-4 w-4" />
-                        <span className="text-sm">{lessonCount} {lessonCount === 1 ? 'lesson' : 'lessons'}</span>
-                    </div>
-                </CardContent>
-            </Card>
-        </button>
-    )
+        <Link href={`/classes/${classId}/month/${monthId}`} className="text-left p-0 w-full rounded-lg transition-all group">
+            {cardContent}
+        </Link>
+    );
 }

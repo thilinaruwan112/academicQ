@@ -1,44 +1,93 @@
 
 'use client';
 
-import type { Lesson } from '@/lib/types';
+import type { Lesson, User } from '@/lib/types';
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Lock, Unlock, ArrowRight, FileVideo, BookOpen } from 'lucide-react';
+import { Lock, Unlock, ArrowRight, FileVideo, Eye } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useMemo, useState } from 'react';
+import { Badge } from '@/components/ui/badge';
 
 interface LessonSummaryProps {
     classId: string;
     lessons: Lesson[];
-    isLocked: boolean;
     monthName: string;
+    enrolledStudents: User[];
 }
 
-export function LessonSummary({ classId, lessons, isLocked, monthName }: LessonSummaryProps) {
+export function LessonSummary({ classId, lessons, monthName, enrolledStudents }: LessonSummaryProps) {
+    const [selectedStudentId, setSelectedStudentId] = useState<string | null>(enrolledStudents[0]?.id || null);
+
+    const selectedStudent = useMemo(() => {
+        return enrolledStudents.find(s => s.id === selectedStudentId);
+    }, [selectedStudentId, enrolledStudents]);
+
+    const isPaid = !!selectedStudent && selectedStudent.paymentStatus === 'Paid';
+    const isLocked = !isPaid;
+
     if (!lessons || lessons.length === 0) {
-        return null;
+        return (
+             <Card>
+                <CardHeader>
+                    <CardTitle>No Lessons Found</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p className="text-muted-foreground">There are no lessons available for {monthName}.</p>
+                </CardContent>
+            </Card>
+        )
     }
 
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <BookOpen />
-                    Lessons for {monthName}
-                </CardTitle>
-                <CardDescription>
-                    {isLocked ? "Access to these lessons is currently locked." : "Select a lesson to view the video."}
-                </CardDescription>
-            </CardHeader>
-            <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {lessons.map(lesson => (
-                        <LessonCard key={lesson.id} lesson={lesson} isLocked={isLocked} classId={classId} />
-                    ))}
-                </div>
-            </CardContent>
-        </Card>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Lessons for {monthName}</CardTitle>
+                        <CardDescription>
+                            {isLocked ? "Access to these lessons is currently locked." : "Select a lesson to view the video."}
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {lessons.map(lesson => (
+                                <LessonCard key={lesson.id} lesson={lesson} isLocked={isLocked} classId={classId} />
+                            ))}
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+            <div className="lg:col-span-1 space-y-6">
+                <Card>
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2"><Eye /> Student View</CardTitle>
+                    <CardDescription>Select a student to see their access status.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <Select onValueChange={setSelectedStudentId} defaultValue={selectedStudentId || undefined}>
+                    <SelectTrigger id="student-view" aria-label="View as student">
+                        <SelectValue placeholder="View as..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {enrolledStudents.map(student => (
+                        <SelectItem key={student.id} value={student.id}>{student.name}</SelectItem>
+                        ))}
+                    </SelectContent>
+                    </Select>
+                    {selectedStudent && (
+                    <div className="mt-4 flex items-center justify-between text-sm p-3 rounded-lg bg-muted/50">
+                       <span>{selectedStudent.name}'s Status:</span>
+                       <Badge variant={isPaid ? 'secondary' : 'destructive'}>{isPaid ? 'Paid' : 'Pending'}</Badge>
+                    </div>
+                    )}
+                </CardContent>
+                </Card>
+            </div>
+        </div>
+
     );
 }
 
