@@ -1,13 +1,21 @@
 export type UserRole = 'Student' | 'Staff' | 'Admin';
 
+export interface Payment {
+  id: string;
+  studentId: string;
+  amount: number;
+  status: 'Paid' | 'Pending';
+  date: string; // ISO 8601 date string
+}
+
 export interface User {
   id: string;
   name: string;
   email: string;
   avatarUrl: string;
-  paymentStatus: 'Paid' | 'Pending';
   classIds: string[];
   role: UserRole;
+  paymentStatus: 'Paid' | 'Pending'; // This will be derived from payments now, but keeping for other parts of app
 }
 
 export interface Class {
