@@ -14,7 +14,7 @@ import {
   SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { usePathname, useRouter } from 'next/navigation';
-import { BookOpen, LayoutDashboard, Users, Moon, LogOut } from 'lucide-react';
+import { BookOpen, LayoutDashboard, Users, CreditCard, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { useToast } from '@/hooks/use-toast';
@@ -81,6 +81,18 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
                 <Link href="/classes">
                   <BookOpen />
                   <span className="group-data-[state=collapsed]:hidden">Classes</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={isActive('/payments')}
+                tooltip="Payments"
+              >
+                <Link href="/payments">
+                  <CreditCard />
+                  <span className="group-data-[state=collapsed]:hidden">Payments</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
