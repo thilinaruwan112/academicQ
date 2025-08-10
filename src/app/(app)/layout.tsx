@@ -5,7 +5,6 @@ import {
   SidebarProvider,
   Sidebar,
   SidebarHeader,
-  SidebarTrigger,
   SidebarContent,
   SidebarMenu,
   SidebarMenuItem,
@@ -40,13 +39,13 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
   
   return (
     <div className="flex min-h-screen bg-background">
-      <Sidebar collapsible="icon">
+      <Sidebar>
         <SidebarHeader>
           <Link href="/dashboard" className="block">
             <Logo className="text-foreground" />
           </Link>
         </SidebarHeader>
-        <SidebarContent className="py-4">
+        <SidebarContent>
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton
@@ -105,10 +104,17 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
       </Sidebar>
       <SidebarInset>
           <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-              <SidebarTrigger className="md:hidden" />
+              <div className="md:hidden">
+                <SidebarMenuButton asChild variant="ghost" size="icon" className="h-10 w-10">
+                    <Link href="/dashboard">
+                        <Logo className="text-foreground h-6 w-auto" />
+                    </Link>
+                </SidebarMenuButton>
+              </div>
               <div className="flex-1">
                   {/* Header content can go here if needed */}
               </div>
+              <SidebarTrigger className="md:hidden" />
           </header>
           <main className="p-4 sm:p-6">
               {children}
