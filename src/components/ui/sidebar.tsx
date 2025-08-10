@@ -358,7 +358,7 @@ const SidebarContent = React.forwardRef<
       ref={ref}
       data-sidebar="content"
       className={cn(
-        "flex-1 py-4",
+        "flex-1",
         className
       )}
       {...props}
@@ -407,9 +407,16 @@ const sidebarMenuButtonVariants = cva(
         outline:
           "bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]",
       },
+      size: {
+        default: "h-10",
+        sm: "h-9",
+        lg: "h-11",
+        icon: "h-10 w-10",
+      }
     },
     defaultVariants: {
       variant: "default",
+      size: "default",
     },
   }
 )
@@ -430,6 +437,7 @@ const SidebarMenuButton = React.forwardRef<
       tooltip,
       className,
       children,
+      size,
       ...props
     },
     ref
@@ -442,7 +450,7 @@ const SidebarMenuButton = React.forwardRef<
         ref={ref}
         data-sidebar="menu-button"
         data-active={isActive}
-        className={cn(sidebarMenuButtonVariants({ variant }), 
+        className={cn(sidebarMenuButtonVariants({ variant, size }), 
         state === 'collapsed' && 'justify-center',
         className)}
         {...props}

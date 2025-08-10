@@ -46,7 +46,7 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
             <Logo className="text-foreground" />
           </Link>
         </SidebarHeader>
-        <SidebarContent>
+        <SidebarContent className="py-4">
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton
@@ -96,7 +96,7 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
             </div>
             <Separator />
             <div className={cn("p-4", state === 'collapsed' && 'p-2')}>
-                 <SidebarMenuButton onClick={handleSignOut} tooltip="Sign Out" size="icon" variant="ghost" className="w-full">
+                 <SidebarMenuButton onClick={handleSignOut} tooltip="Sign Out" variant="ghost" className="w-full">
                     <LogOut />
                     <span className={cn(state === 'collapsed' && 'sr-only')}>Sign Out</span>
                 </SidebarMenuButton>
