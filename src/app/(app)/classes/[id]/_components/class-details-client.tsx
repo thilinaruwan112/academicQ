@@ -10,6 +10,7 @@ import { Users, ListVideo, Eye, Calendar, Lock, Unlock } from 'lucide-react';
 import { format, getMonth, getYear } from 'date-fns';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
 
 interface ClassDetailsClientProps {
   classInfo: Class;
@@ -50,19 +51,6 @@ export function ClassDetailsClient({ classInfo, enrolledStudents, lessons }: Cla
             <p className="text-muted-foreground">{classInfo.description}</p>
             <p className="text-sm text-muted-foreground mt-2">Taught by {classInfo.teacher} &bull; {classInfo.schedule}</p>
         </div>
-         <div className="w-full sm:w-48">
-            <Select onValueChange={setSelectedStudentId} defaultValue={selectedStudentId || undefined}>
-                <SelectTrigger id="student-view" aria-label="View as student">
-                    <Eye className="mr-2 h-4 w-4" />
-                    <SelectValue placeholder="View as..." />
-                </SelectTrigger>
-                <SelectContent>
-                    {enrolledStudents.map(student => (
-                    <SelectItem key={student.id} value={student.id}>{student.name}</SelectItem>
-                    ))}
-                </SelectContent>
-            </Select>
-        </div>
       </header>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -99,7 +87,31 @@ export function ClassDetailsClient({ classInfo, enrolledStudents, lessons }: Cla
            </Card>
         </div>
 
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 space-y-6">
+          <Card>
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2"><Eye /> Student View</CardTitle>
+                <CardDescription>Select a student to see their access status.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <Select onValueChange={setSelectedStudentId} defaultValue={selectedStudentId || undefined}>
+                    <SelectTrigger id="student-view" aria-label="View as student">
+                        <SelectValue placeholder="View as..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {enrolledStudents.map(student => (
+                        <SelectItem key={student.id} value={student.id}>{student.name}</SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+                 {selectedStudent && (
+                    <div className="mt-4 flex items-center justify-between text-sm p-3 rounded-lg bg-muted/50">
+                       <span>{selectedStudent.name}'s Status:</span>
+                       <Badge variant={isPaid ? 'secondary' : 'destructive'}>{isPaid ? 'Paid' : 'Pending'}</Badge>
+                    </div>
+                )}
+            </CardContent>
+          </Card>
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
