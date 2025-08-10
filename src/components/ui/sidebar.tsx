@@ -21,9 +21,9 @@ import {
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
-const SIDEBAR_WIDTH = "15rem"
+const SIDEBAR_WIDTH = "16rem"
 const SIDEBAR_WIDTH_MOBILE = "18rem"
-const SIDEBAR_WIDTH_ICON = "3.5rem"
+const SIDEBAR_WIDTH_ICON = "3.75rem"
 const SIDEBAR_KEYBOARD_SHORTCUT = "b"
 
 type SidebarContext = {
@@ -175,7 +175,7 @@ const Sidebar = React.forwardRef<
         <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
           <SheetContent
             side="left"
-            className="w-[--sidebar-width] bg-background p-0 [&>button]:hidden"
+            className="w-[--sidebar-width] bg-sidebar p-0 [&>button]:hidden"
             style={
               {
                 "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -191,7 +191,7 @@ const Sidebar = React.forwardRef<
     return (
       <aside
         ref={ref}
-        className={cn("group hidden flex-col md:flex bg-background border-r",
+        className={cn("group hidden flex-col md:flex bg-sidebar text-sidebar-foreground",
           "transition-all duration-300 ease-in-out",
           state === 'expanded' ? 'w-[var(--sidebar-width)]' : 'w-[var(--sidebar-width-icon)]',
           className
@@ -201,7 +201,7 @@ const Sidebar = React.forwardRef<
       >
         <div className="flex h-full w-full flex-col relative">
           {children}
-          <SidebarTrigger className="absolute top-1/2 -right-3 -translate-y-1/2" />
+          <SidebarTrigger className="absolute top-12 -right-3 -translate-y-1/2" />
         </div>
       </aside>
     )
@@ -234,9 +234,9 @@ const SidebarTrigger = React.forwardRef<
   return (
     <Button
       ref={ref}
-      variant="outline"
+      variant="ghost"
       size="icon"
-      className={cn("h-6 w-6 rounded-full", className)}
+      className={cn("h-6 w-6 rounded-full bg-sidebar-accent text-sidebar-accent-foreground hover:bg-sidebar-accent/90", className)}
       onClick={toggleSidebar}
       {...props}
     >
@@ -292,7 +292,7 @@ const SidebarHeader = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="header"
-      className={cn("flex h-14 items-center border-b p-4", 
+      className={cn("flex h-14 items-center border-b border-sidebar-border p-4", 
       state === 'collapsed' && 'justify-center p-2',
       className)}
       {...props}
@@ -309,7 +309,7 @@ const SidebarFooter = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="footer"
-      className={cn("mt-auto border-t", className)}
+      className={cn("mt-auto", className)}
       {...props}
     />
   )
@@ -355,7 +355,7 @@ const SidebarMenu = React.forwardRef<
   return (
     <ul
       ref={ref}
-      className={cn("flex w-full min-w-0 flex-col gap-1 px-3",
+      className={cn("flex w-full min-w-0 flex-col gap-1 px-4",
       state === 'collapsed' && 'px-2',
       className)}
       {...props}
@@ -382,8 +382,8 @@ const sidebarMenuButtonVariants = cva(
   {
     variants: {
       variant: {
-        default: "hover:bg-muted",
-        ghost: "hover:bg-muted",
+        default: "hover:bg-sidebar-accent text-sidebar-accent-foreground/80 hover:text-sidebar-accent-foreground",
+        ghost: "hover:bg-sidebar-accent text-sidebar-accent-foreground/80 hover:text-sidebar-accent-foreground",
       },
       size: {
         default: "h-9",
@@ -429,7 +429,7 @@ const SidebarMenuButton = React.forwardRef<
         data-sidebar="menu-button"
         data-active={isActive}
         className={cn(sidebarMenuButtonVariants({ variant, size }), 
-        isActive && 'bg-primary text-primary-foreground hover:bg-primary/90',
+        isActive && 'bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary/90',
         state === 'collapsed' && 'justify-center',
         className)}
         {...props}

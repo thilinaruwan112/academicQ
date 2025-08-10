@@ -14,13 +14,13 @@ import {
   SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { usePathname, useRouter } from 'next/navigation';
-import { BookOpen, LayoutDashboard, Users, Settings, LogOut } from 'lucide-react';
+import { BookOpen, LayoutDashboard, Users, Moon, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { useToast } from '@/hooks/use-toast';
-import { Separator } from '@/components/ui/separator';
 import { useSidebar } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 function AppLayoutContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -86,21 +86,24 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarContent>
-        <SidebarFooter>
-            <div className={cn("flex items-center p-4", state === 'collapsed' ? 'justify-center px-2' : 'gap-2')}>
-              <ThemeSwitcher />
-              <SidebarMenuButton tooltip="Settings" size="icon" variant="ghost">
-                <Settings />
-                <span className="sr-only">Settings</span>
-              </SidebarMenuButton>
-            </div>
-            <Separator />
-            <div className={cn("p-4", state === 'collapsed' && 'p-2')}>
-                 <SidebarMenuButton onClick={handleSignOut} tooltip="Sign Out" variant="ghost" className="w-full">
-                    <LogOut />
-                    <span className={cn(state === 'collapsed' && 'sr-only')}>Sign Out</span>
-                </SidebarMenuButton>
-            </div>
+        <SidebarFooter className={cn('p-4 space-y-4 bg-sidebar-footer', state === 'collapsed' && 'p-2')}>
+           <div className={cn("flex items-center justify-between", state === 'collapsed' && 'justify-center')}>
+             <ThemeSwitcher />
+             <SidebarMenuButton onClick={handleSignOut} tooltip="Sign Out" variant="ghost" size="icon">
+                <LogOut />
+                <span className="sr-only">Sign Out</span>
+             </SidebarMenuButton>
+           </div>
+           <div className={cn("flex items-center gap-3", state === 'collapsed' && 'hidden')}>
+              <Avatar className="h-9 w-9">
+                  <AvatarImage src="https://placehold.co/100x100.png" alt="System Administrator" />
+                  <AvatarFallback>SA</AvatarFallback>
+              </Avatar>
+              <div>
+                  <p className="text-sm font-semibold text-sidebar-footer-foreground">System Administrator</p>
+                  <p className="text-xs text-muted-foreground group-hover:text-sidebar-footer-foreground">hmdilipkf@gmail.com</p>
+              </div>
+           </div>
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
